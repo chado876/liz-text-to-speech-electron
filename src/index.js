@@ -22,6 +22,14 @@ async function uploadFile(file) {
   {
     body: formData,
     method:"post"
+  }).then(response=>{
+    return response.json();
+  }).then(data => {
+    console.log(data.audio);
+    var audioDownloadEnpoint = "http://127.0.0.1:5000/audio/" + data.audio
+    var audio = document.getElementById('audio-controls');
+    audio.setAttribute('src', audioDownloadEnpoint);
+    audio.play();
   });
 
 }
