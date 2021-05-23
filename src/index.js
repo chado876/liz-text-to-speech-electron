@@ -4,6 +4,28 @@ button = dropArea.querySelector("button"),
 input = dropArea.querySelector("input");
 let file; //this is a global variable and we'll use it inside multiple functions
  
+var test = 'Hello'
+async function makePostRequest(test) {
+  fetch('http://127.0.0.1:5000/test')
+  .then(response=>{
+    return response.json();
+  }).then(res => {
+    console.log(res);
+  });
+}
+
+async function uploadFile(file) {
+  let formData = new FormData();
+  formData.append('file', file);
+
+  fetch('http://127.0.0.1:5000/upload',
+  {
+    body: formData,
+    method:"post"
+  });
+
+}
+
 button.onclick = ()=>{
   input.click(); //if user click on the button then the input also clicked
 }
@@ -40,22 +62,12 @@ dropArea.addEventListener("drop", (event)=>{
  
 function showFile(){
   let fileType = file.type; //getting selected file type
-  let validExtensions = ["application/pdf"]; //adding some valid image extensions in array
+  let fileName = file.name;
+  console.log(fileName);
+  let validExtensions = ["application/pdf", "text/plain"]; //adding some valid image extensions in array
   if(validExtensions.includes(fileType)){ //if user selected file is an image file
-    let fileReader = new FileReader(); //creating new FileReader object
-    // let url = pdfToBlob(file);
-    fileReader.onload = ()=>{
-            let fileURL = fileReader.result; //passing user file source in fileURL variable
-            let fileTag  = `<embed src="${fileURL}" width="800px" height="2100px" />`;
-            dropArea.innerHTML = fileTag; //adding that created img tag inside dropArea container
-    }
-    // fileReader.onload = ()=>{
-    //   let fileURL = fileReader.result; //passing user file source in fileURL variable
-  	//   // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
-    //   let imgTag = `<img src="${fileURL}" alt="image">`; //creating an img tag and passing user selected file source inside src attribute
-    //   dropArea.innerHTML = imgTag; //adding that created img tag inside dropArea container
-    // }
-    fileReader.readAsDataURL(file);
+    uploadFile(file);
+    document.getElementById('fileName').textContent = fileName;
   }else{
     alert("This is not a supported file!");
     dropArea.classList.remove("active");
@@ -63,22 +75,3 @@ function showFile(){
   }
 }
 
-function pdfToBlob(pdf){
-    // base64 string
-var base64str = pdf;
-
-// decode base64 string, remove space for IE compatibility
-var binary = atob(base64str.replace(/\s/g, ''));
-var len = binary.length;
-var buffer = new ArrayBuffer(len);
-var view = new Uint8Array(buffer);
-for (var i = 0; i < len; i++) {
-    view[i] = binary.charCodeAt(i);
-}
-
-// create the blob object with content-type "application/pdf"               
-var blob = new Blob( [view], { type: "application/pdf" });
-var url = URL.createObjectURL(blob);
-
-return url;
-}

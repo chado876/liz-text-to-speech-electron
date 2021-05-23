@@ -11,5 +11,8 @@
   "description": "",
   "devDependencies": {
     "electron": "^12.0.9"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
   }
 }
