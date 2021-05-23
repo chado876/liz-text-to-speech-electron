@@ -6,22 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drag & Drop or Browse: File Upload | CodingNepal</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-</head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></head>
 <body>
-  <div class="drag-area">
-    <div class="audio-area">
-      <audio id="audio-controls" controls>
-        <source id="mp3-src" type="audio/mp3">
-      </audio>
+  <div class="audio-area">
+    <header>LIZ Text To Speech</header>
+    <br>
+    <div class="input-choice">
+      <button>Type Text<i class="fa fa-comment" aria-hidden="true"></i></button>
+      <button>Upload File<i class="fa fa-cloud-upload"></i></button>
     </div>
-    <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+
+    <audio id="audio-controls" controls style="display:none">
+      <source id="mp3-src" type="audio/mp3">
+    </audio>
+  </div>
+    <br>
+
+  <header>Enter Some Text</header>
+  <div class="text-area">
+    <textarea id="text-box" rows="4" cols="50"></textarea>
+  </div>
+
+  <div class="drag-area" style="display:none">
+    <div class="icon"><i class="fa fa-cloud-upload"></i></div>
     <header>Drag & Drop to Upload File</header>
     <span>OR</span>
     <button>Browse File</button>
     <span id="fileName" class="fileName"></span>
     <input type="file" hidden>
   </div>
+  <button id="speak-btn" class="speak-btn">Read<i class="fa fa-microphone"></i></button>
+
 
   <script src="index.js"></script>
 
