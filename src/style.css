@@ -68,6 +68,13 @@ span{
   cursor: pointer;
 }
 
+.speak-btn:hover {
+  color: white;
+  background: #2B59C3;
+  border: 2px solid white;
+}
+
+
 .input-choice {
   flex-direction: row;
 }
@@ -81,4 +88,10 @@ span{
   color: #2B59C3;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.input-choice button:hover {
+  color: white;
+  background: #2B59C3;
+  border: 2px solid white;
 }
