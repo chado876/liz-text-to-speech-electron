@@ -4,17 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drag & Drop or Browse: File Upload | CodingNepal</title>
+    <title>Liz Text To Speech</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></head>
 <body>
-  <img src="assets/liz.png" width="200" height="200" style="text-align: center;">
-  <header>Liz Text To Speech</header>
-    <br>
-    <div class="input-choice">
-      <button><i class="fa fa-comment" aria-hidden="true"></i>Enter Text</button>
-      <button><i class="fa fa-cloud-upload"></i>Upload File</button>
-    </div>
+  <header id="headerText">Liz Text To Speech</header>
+  <div id="home" class="home">
+    <img src="assets/liz.png" width="200" height="200">
+      <br>
+      <div class="input-choice">
+        <button id="textOption"><i class="fa fa-comment" aria-hidden="true"></i> Enter Text</button>
+        <button id="fileOption"><i class="fa fa-cloud-upload"></i> Upload File</button>
+      </div>
+  </div>
+  
   <div class="audio-area">
     <audio id="audio-controls" controls style="display:none">
       <source id="mp3-src" type="audio/mp3">
@@ -22,22 +25,25 @@
   </div>
     <br>
 
-  <header>Enter Some Text</header>
-  <div class="text-area">
+  <div class="text-area" id="text-area" style="display: none;">
     <textarea id="text-box" rows="4" cols="50" style="border-radius: 5px;"></textarea>
   </div>
 
-  <div class="drag-area" style="display:none">
-    <div class="icon"><i class="fa fa-cloud-upload"></i></div>
-    <header>Drag & Drop to Upload File</header>
-    <span>OR</span>
-    <button>Browse File</button>
-    <span id="fileName" class="fileName"></span>
-    <input type="file" hidden>
+  <div id="file-area" class="file-option" style="display:none">  
+    <div class="drag-area" id="drag-area">
+      <div class="icon"><i class="fa fa-cloud-upload"></i></div>
+      <header id="drag-header">Drag & Drop to Upload File</header>
+      <span>OR</span>
+      <button><i class="fa fa-file" aria-hidden="true"></i> Browse File</button>
+      <span id="fileName" class="fileName"></span>
+      <input type="file" hidden>
+    </div>
   </div>
-  <button id="speak-btn" class="speak-btn"><i class="fa fa-microphone"></i>Read</button>
 
-
+  <div id="button-group" class="button-group" style="display: none;">
+    <button id="back-btn"><i class="fa fa-arrow-left"></i> Back</button>
+    <button id="speak-btn"><i class="fa fa-microphone"></i> Read</button>
+  </div>
   <script src="index.js"></script>
 
 </body>

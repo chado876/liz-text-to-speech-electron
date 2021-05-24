@@ -1,9 +1,18 @@
-const dropArea = document.querySelector(".drag-area"),
+const dropArea = document.getElementById("drag-area"),
 dragText = dropArea.querySelector("header"),
 button = dropArea.querySelector("button"),
 input = dropArea.querySelector("input");
 
-const speakButton = document.getElementById("speak-btn");
+const speakButton = document.getElementById("speak-btn"),
+textOptionBtn = document.getElementById("textOption"),
+fileOptionBtn = document.getElementById("fileOption"),
+backBtn = document.getElementById("back-btn"),
+headerText = document.getElementById("headerText"),
+audio = document.getElementById('audio-controls');
+
+
+var isFileOption = false;
+var validFile = false;
 
 let file; //this is a global variable and we'll use it inside multiple functions
  
@@ -30,36 +39,67 @@ async function uploadFile(file) {
   }).then(data => {
     console.log(data.audio);
     var audioDownloadEnpoint = "http://127.0.0.1:5000/audio/" + data.audio
-    var audio = document.getElementById('audio-controls');
+    audio.style.display="flex";
     audio.setAttribute('src', audioDownloadEnpoint);
     audio.play();
   });
 
 }
 
+textOptionBtn.onclick = ()=>{
+  headerText.innerHTML = "Type Some Text For Liz To Read!";
+  document.getElementById('home').style.display='none';
+  document.getElementById('text-area').style.display='flex';
+  document.getElementById('file-area').style.display='none';
+  document.getElementById('button-group').style.display='flex';
+  isFileOption = false;
+}
+
+fileOptionBtn.onclick = ()=>{
+  headerText.innerHTML = "Upload A File For Liz To Read!";
+  document.getElementById('home').style.display='none';
+  document.getElementById('text-area').style.display='none';
+  document.getElementById('file-area').style.display='flex';
+  document.getElementById('button-group').style.display='flex';
+  isFileOption = true;
+}
+
+backBtn.onclick = ()=>{
+  headerText.innerHTML = "Upload A File For Liz To Read!";
+  audio.style.display="none";
+  document.getElementById('home').style.display='flex';
+  document.getElementById('text-area').style.display='none';
+  document.getElementById('file-area').style.display='none';
+  document.getElementById('button-group').style.display='none';
+}
+
 speakButton.onclick = ()=>{
-  var textEntered = document.getElementById("text-box").value;
-  console.log(textEntered);
-
-  let formData = new FormData();
-  formData.append('text', textEntered);
-
-  fetch('http://127.0.0.1:5000/text',
-  {
-    body: formData,
-    method:"post"
-  }).then(response=>{
-    return response.json();
-  }).then(data => {
-    console.log(data.audio);
-    var audioDownloadEnpoint = "http://127.0.0.1:5000/audio/" + data.audio
-    var audio = document.getElementById('audio-controls');
-    audio.style.display="block";
-    audio.setAttribute('src', audioDownloadEnpoint);
-    audio.play();
-  });
-
-
+  audio.style.display="none";
+  if(isFileOption){
+    if(validFile){
+      uploadFile(file);
+    }
+  } else {
+    var textEntered = document.getElementById("text-box").value;
+    console.log(textEntered);
+  
+    let formData = new FormData();
+    formData.append('text', textEntered);
+  
+    fetch('http://127.0.0.1:5000/text',
+    {
+      body: formData,
+      method:"post"
+    }).then(response=>{
+      return response.json();
+    }).then(data => {
+      console.log(data.audio);
+      var audioDownloadEnpoint = "http://127.0.0.1:5000/audio/" + data.audio
+      audio.style.display="flex";
+      audio.setAttribute('src', audioDownloadEnpoint);
+      audio.play();
+    });
+  }
 }
 
 
@@ -98,12 +138,12 @@ dropArea.addEventListener("drop", (event)=>{
 });
  
 function showFile(){
+  validFile = false;
   let fileType = file.type; //getting selected file type
   let fileName = file.name;
-  console.log(fileName);
   let validExtensions = ["application/pdf", "text/plain"]; //adding some valid image extensions in array
   if(validExtensions.includes(fileType)){ //if user selected file is an image file
-    uploadFile(file);
+    validFile = true;
     document.getElementById('fileName').textContent = fileName;
   }else{
     alert("This is not a supported file!");
