@@ -65,7 +65,8 @@ fileOptionBtn.onclick = ()=>{
 }
 
 backBtn.onclick = ()=>{
-  headerText.innerHTML = "Upload A File For Liz To Read!";
+  headerText.innerHTML = "Liz Text To Speech";
+  document.getElementById("text-box").value = "";
   audio.style.display="none";
   document.getElementById('home').style.display='flex';
   document.getElementById('text-area').style.display='none';
@@ -141,7 +142,7 @@ function showFile(){
   validFile = false;
   let fileType = file.type; //getting selected file type
   let fileName = file.name;
-  let validExtensions = ["application/pdf", "text/plain"]; //adding some valid image extensions in array
+  let validExtensions = ["application/pdf", "text/plain", "application/msword" , "application/vnd.openxmlformats-officedocument.presentationml.presentation"]; //adding some valid image extensions in array
   if(validExtensions.includes(fileType)){ //if user selected file is an image file
     validFile = true;
     document.getElementById('fileName').textContent = fileName;

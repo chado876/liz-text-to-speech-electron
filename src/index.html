@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></head>
 <body>
-  <header id="headerText">Liz Text To Speech</header>
+  <header id="headerText">Liz Text To Speech <i class="fa fa-microphone"></i></header>
   <div id="home" class="home">
     <img src="assets/liz.png" width="200" height="200">
       <br>
       <div class="input-choice">
         <button id="textOption"><i class="fa fa-comment" aria-hidden="true"></i> Enter Text</button>
+        <span> | or | </span>
         <button id="fileOption"><i class="fa fa-cloud-upload"></i> Upload File</button>
       </div>
   </div>
@@ -26,7 +27,7 @@
     <br>
 
   <div class="text-area" id="text-area" style="display: none;">
-    <textarea id="text-box" rows="4" cols="50" style="border-radius: 5px;"></textarea>
+    <textarea id="text-box" rows="8" cols="80" style="border-radius: 5px;"></textarea>
   </div>
 
   <div id="file-area" class="file-option" style="display:none">  

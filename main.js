@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
 const path = require('path')
 
 function createWindow () {
@@ -7,10 +7,13 @@ function createWindow () {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    icon: 'src/assets/icon.ico'
   })
 
   win.loadFile('src/index.html')
+
+  Menu.setApplicationMenu(null);
 
     // Open the DevTools.
     // win.webContents.openDevTools()
