@@ -6,6 +6,7 @@ input = dropArea.querySelector("input");
 const speakButton = document.getElementById("speak-btn"),
 textOptionBtn = document.getElementById("textOption"),
 fileOptionBtn = document.getElementById("fileOption"),
+articleOptionBtn = document.getElementById("articleOption"),
 backBtn = document.getElementById("back-btn"),
 headerText = document.getElementById("headerText"),
 audio = document.getElementById('audio-controls');
@@ -64,6 +65,16 @@ fileOptionBtn.onclick = ()=>{
   isFileOption = true;
 }
 
+articleOptionBtn.onclick = ()=>{
+  headerText.innerHTML = "Copy & Paste an Article's Link for Liz to Read!";
+  document.getElementById('home').style.display='none';
+  document.getElementById('text-area').style.display='none';
+  document.getElementById('file-area').style.display='none';
+  document.getElementById('article-area').style.display='flex';
+  document.getElementById('button-group').style.display='flex';
+  isFileOption = true;
+}
+
 backBtn.onclick = ()=>{
   headerText.innerHTML = "Liz Text To Speech";
   document.getElementById("text-box").value = "";
@@ -72,6 +83,7 @@ backBtn.onclick = ()=>{
   document.getElementById('text-area').style.display='none';
   document.getElementById('file-area').style.display='none';
   document.getElementById('button-group').style.display='none';
+  document.getElementById('article-area').style.display='none';
 }
 
 speakButton.onclick = ()=>{

@@ -12,10 +12,13 @@
   <div id="home" class="home">
     <img src="assets/liz.png" width="200" height="200">
       <br>
+      <span> Choose one of the following options: </span>
       <div class="input-choice">
         <button id="textOption"><i class="fa fa-comment" aria-hidden="true"></i> Enter Text</button>
-        <span> | or | </span>
+        <span> | </span>
         <button id="fileOption"><i class="fa fa-cloud-upload"></i> Upload File</button>
+        <span> | </span>
+        <button id="articleOption"><i class="fa fa-newspaper-o"></i> Read Article</button>
       </div>
   </div>
   
@@ -39,6 +42,10 @@
       <span id="fileName" class="fileName"></span>
       <input type="file" hidden>
     </div>
+  </div>
+
+  <div id="article-area" style="display:none; padding-bottom: 35px;">
+    <textarea id="article-box" rows="2" cols="80" style="border-radius: 5px;"></textarea>
   </div>
 
   <div id="button-group" class="button-group" style="display: none;">
