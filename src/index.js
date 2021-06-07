@@ -9,10 +9,16 @@ fileOptionBtn = document.getElementById("fileOption"),
 articleOptionBtn = document.getElementById("articleOption"),
 backBtn = document.getElementById("back-btn"),
 headerText = document.getElementById("headerText"),
+textLoader = document.getElementById("text-loader"),
+fileLoader = document.getElementById("file-loader"),
+articleLoader = document.getElementById("article-loader"),
 audio = document.getElementById('audio-controls');
 
 
 var isFileOption = false;
+var isTextOption = false;
+var isArticleOption = false;
+
 var validFile = false;
 
 let file; //this is a global variable and we'll use it inside multiple functions
@@ -30,6 +36,7 @@ async function makePostRequest(test) {
 async function uploadFile(file) {
   let formData = new FormData();
   formData.append('file', file);
+  fileLoader.style.display = "flex";
 
   fetch('http://127.0.0.1:5000/upload',
   {
@@ -40,6 +47,7 @@ async function uploadFile(file) {
   }).then(data => {
     console.log(data.audio);
     var audioDownloadEnpoint = "http://127.0.0.1:5000/audio/" + data.audio
+    fileLoader.style.display = "none";
     audio.style.display="flex";
     audio.setAttribute('src', audioDownloadEnpoint);
     audio.play();
@@ -54,6 +62,8 @@ textOptionBtn.onclick = ()=>{
   document.getElementById('file-area').style.display='none';
   document.getElementById('button-group').style.display='flex';
   isFileOption = false;
+  isTextOption = true;
+  isArticleOption = false;
 }
 
 fileOptionBtn.onclick = ()=>{
@@ -63,6 +73,8 @@ fileOptionBtn.onclick = ()=>{
   document.getElementById('file-area').style.display='flex';
   document.getElementById('button-group').style.display='flex';
   isFileOption = true;
+  isTextOption = false;
+  isArticleOption = false;
 }
 
 articleOptionBtn.onclick = ()=>{
@@ -72,7 +84,9 @@ articleOptionBtn.onclick = ()=>{
   document.getElementById('file-area').style.display='none';
   document.getElementById('article-area').style.display='flex';
   document.getElementById('button-group').style.display='flex';
-  isFileOption = true;
+  isFileOption = false;
+  isTextOption = false;
+  isArticleOption = true;
 }
 
 backBtn.onclick = ()=>{
@@ -92,12 +106,13 @@ speakButton.onclick = ()=>{
     if(validFile){
       uploadFile(file);
     }
-  } else {
+  } else if (isTextOption) {
     var textEntered = document.getElementById("text-box").value;
     console.log(textEntered);
   
     let formData = new FormData();
     formData.append('text', textEntered);
+    textLoader.style.display = "flex";
   
     fetch('http://127.0.0.1:5000/text',
     {
@@ -108,6 +123,27 @@ speakButton.onclick = ()=>{
     }).then(data => {
       console.log(data.audio);
       var audioDownloadEnpoint = "http://127.0.0.1:5000/audio/" + data.audio
+      textLoader.style.display = "none";
+      audio.style.display="flex";
+      audio.setAttribute('src', audioDownloadEnpoint);
+      audio.play();
+    });
+  } else if (isArticleOption) {
+    var articleLink = document.getElementById("article-box").value;  
+    let formData = new FormData();
+    formData.append('articleLink', articleLink);
+    articleLoader.style.display = "flex";
+  
+    fetch('http://127.0.0.1:5000/article',
+    {
+      body: formData,
+      method:"post"
+    }).then(response=>{
+      return response.json();
+    }).then(data => {
+      console.log(data.audio);
+      var audioDownloadEnpoint = "http://127.0.0.1:5000/audio/" + data.audio
+      articleLoader.style.display = "none";
       audio.style.display="flex";
       audio.setAttribute('src', audioDownloadEnpoint);
       audio.play();
