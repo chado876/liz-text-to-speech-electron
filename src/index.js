@@ -39,11 +39,9 @@ async function uploadFile(file) {
   }).then(response => {
     return response.json();
   }).then(data => {
-    var audioDownloadEnpoint = apiPath + "audio/" + data.audio
     fileLoader.style.display = "none";
-    audio.style.display = "flex";
-    audio.setAttribute('src', audioDownloadEnpoint);
-    audio.play();
+    var audioDownloadEnpoint = apiPath + "audio/" + data.audio
+    setAndPlayAudio(audioDownloadEnpoint);
   });
 }
 
@@ -111,12 +109,9 @@ speakButton.onclick = () => {
     }).then(response => {
       return response.json();
     }).then(data => {
-      console.log(data.audio);
-      var audioDownloadEnpoint = apiPath + "/audio/" + data.audio
       textLoader.style.display = "none";
-      audio.style.display = "flex";
-      audio.setAttribute('src', audioDownloadEnpoint);
-      audio.play();
+      var audioDownloadEnpoint = apiPath + "/audio/" + data.audio
+      setAndPlayAudio(audioDownloadEnpoint)
     });
   } else if (isArticleOption) {
     var articleLink = articleInput.value;
@@ -130,16 +125,18 @@ speakButton.onclick = () => {
     }).then(response => {
       return response.json();
     }).then(data => {
-      console.log(data.audio);
-      var audioDownloadEnpoint = apiPath + "/audio/" + data.audio
       articleLoader.style.display = "none";
-      audio.style.display = "flex";
-      audio.setAttribute('src', audioDownloadEnpoint);
-      audio.play();
+      var audioDownloadEnpoint = apiPath + "/audio/" + data.audio
+      setAndPlayAudio(audioDownloadEnpoint);
     });
   }
 }
 
+function setAndPlayAudio(audioUrl){
+  audio.style.display = "flex";
+  audio.setAttribute('src', audioUrl);
+  audio.play();
+}
 
 button.onclick = () => {
   input.click(); //if user click on the button then the input also clicked
@@ -188,4 +185,8 @@ function showFile() {
     dropArea.classList.remove("active");
     dragText.textContent = "Drag & Drop to Upload File";
   }
+}
+
+function handleError(){
+
 }
