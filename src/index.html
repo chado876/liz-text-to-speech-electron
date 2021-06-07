@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Created By CodingNepal - www.codingnepalweb.com -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,6 +14,7 @@
       <span> Choose one of the following options: </span>
       <div class="input-choice">
         <button id="textOption"><i class="fa fa-comment" aria-hidden="true"></i> Enter Text</button>
+        <button id="textOption2"><i class="fa fa-comment" aria-hidden="true" hr></i> Enter Text</button>
         <span> | </span>
         <button id="fileOption"><i class="fa fa-cloud-upload"></i> Upload File</button>
         <span> | </span>
@@ -30,10 +30,12 @@
     <br>
 
   <div class="text-area" id="text-area" style="display: none;">
+    <div id="text-loader" class="loader" style="display: none;"></div>
     <textarea id="text-box" rows="8" cols="80" style="border-radius: 5px;"></textarea>
   </div>
 
   <div id="file-area" class="file-option" style="display:none">  
+    <div id="file-loader" class="loader" style="display: none;"></div>
     <div class="drag-area" id="drag-area">
       <div class="icon"><i class="fa fa-cloud-upload"></i></div>
       <header id="drag-header">Drag & Drop to Upload File</header>
@@ -44,7 +46,8 @@
     </div>
   </div>
 
-  <div id="article-area" style="display:none; padding-bottom: 35px;">
+  <div id="article-area" class="article-area" style="display:none; padding-bottom: 35px;">
+    <div id="article-loader" class="loader" style="display: none;"></div>
     <textarea id="article-box" rows="2" cols="80" style="border-radius: 5px;"></textarea>
   </div>
 
