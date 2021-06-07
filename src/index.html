@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liz Text To Speech</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liz Text To Speech</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
 <body>
   <header id="headerText">Liz Text To Speech <i class="fa fa-microphone"></i></header>
   <div id="home" class="home">
     <img src="assets/liz.png" width="200" height="200">
-      <br>
-      <span> Choose one of the following options: </span>
-      <div class="input-choice">
-        <button id="textOption"><i class="fa fa-comment" aria-hidden="true"></i> Enter Text</button>
-        <button id="textOption2"><i class="fa fa-comment" aria-hidden="true" hr></i> Enter Text</button>
-        <span> | </span>
-        <button id="fileOption"><i class="fa fa-cloud-upload"></i> Upload File</button>
-        <span> | </span>
-        <button id="articleOption"><i class="fa fa-newspaper-o"></i> Read Article</button>
-      </div>
+    <br>
+    <span> Choose one of the following options: </span>
+    <div class="input-choice">
+      <button id="textOption"><i class="fa fa-comment" aria-hidden="true"></i> Enter Text</button>
+      <span> | </span>
+      <button id="fileOption"><i class="fa fa-cloud-upload"></i> Upload File</button>
+      <span> | </span>
+      <button id="articleOption"><i class="fa fa-newspaper-o"></i> Read Article</button>
+    </div>
   </div>
-  
+
   <div class="audio-area">
     <audio id="audio-controls" controls style="display:none">
       <source id="mp3-src" type="audio/mp3">
     </audio>
   </div>
-    <br>
+  <br>
 
   <div class="text-area" id="text-area" style="display: none;">
     <div id="text-loader" class="loader" style="display: none;"></div>
     <textarea id="text-box" rows="8" cols="80" style="border-radius: 5px;"></textarea>
   </div>
 
-  <div id="file-area" class="file-option" style="display:none">  
+  <div id="file-area" class="file-option" style="display:none">
     <div id="file-loader" class="loader" style="display: none;"></div>
     <div class="drag-area" id="drag-area">
       <div class="icon"><i class="fa fa-cloud-upload"></i></div>
