@@ -36,7 +36,8 @@ async function uploadFile(file) {
   fetch(apiPath + 'upload', {
     body: formData,
     method: "post"
-  }).then(response => {
+  }).then(handleErrors)
+  .then(response => {
     return response.json();
   }).then(data => {
     fileLoader.style.display = "none";
@@ -88,6 +89,7 @@ backBtn.onclick = () => {
   fileArea.style.display = 'none';
   buttonGroup.style.display = 'none';
   articleArea.style.display = 'none';
+  stopAudio();
 }
 
 speakButton.onclick = () => {
@@ -106,7 +108,8 @@ speakButton.onclick = () => {
     fetch(apiPath + 'text', {
       body: formData,
       method: "post"
-    }).then(response => {
+    }).then(handleErrors)
+    .then(response => {
       return response.json();
     }).then(data => {
       textLoader.style.display = "none";
@@ -122,7 +125,8 @@ speakButton.onclick = () => {
     fetch(apiPath + 'article', {
       body: formData,
       method: "post"
-    }).then(response => {
+    }).then(handleErrors)
+    .then(response => {
       return response.json();
     }).then(data => {
       articleLoader.style.display = "none";
@@ -136,6 +140,10 @@ function setAndPlayAudio(audioUrl){
   audio.style.display = "flex";
   audio.setAttribute('src', audioUrl);
   audio.play();
+}
+
+function stopAudio(){
+  audio.src = ""
 }
 
 button.onclick = () => {
@@ -187,6 +195,22 @@ function showFile() {
   }
 }
 
-function handleError(){
+function handleErrors(response){
+    if (!response.ok) {
+        stopLoading();
+        window.alert(response.statusText);
+        throw Error(response.statusText);
+    }
+    return response;
+}
+
+function stopLoading(){
+  if(isTextOption){
+    textLoader.style.display = "none";
+  } else if (isFileOption) {
+    fileLoader.style.display = "none";
+  } else if (isArticleOption) {
+    articleLoader.style.display = "none";
+  }
 
 }
