@@ -21,9 +21,10 @@ dropArea = document.getElementById("drag-area"),
   buttonGroup = document.getElementById('button-group'),
   textInput = document.getElementById('text-box'),
   articleInput = document.getElementById('article-box'),
-  parseTreeView = document.getElementById('parse-tree-view'),
+  // parseTreeView = document.getElementById('parse-tree-view'),
   modal = document.getElementById("myModal"),
-  span = document.getElementsByClassName("close")[0];
+  span = document.getElementsByClassName("close")[0],
+  modalContent = document.getElementById("modal-content");
 
 
 var isFileOption = false;
@@ -32,6 +33,8 @@ isTextOption = false,
   validFile = false;
 
 let file; //this is a global variable and we'll use it inside multiple functions
+
+var parseTreeDownloadPath = ''
 
 async function uploadFile(file) {
   let formData = new FormData();
@@ -45,25 +48,32 @@ async function uploadFile(file) {
   .then(response => {
     return response.json();
   }).then(data => {
-    showParseTreeButton(true);
     fileLoader.style.display = "none";
-    var audioDownloadEnpoint = apiPath + "audio/" + data.audio
+    var audioDownloadEnpoint = apiPath + "audio/" + data.audio;
+    parseTreeDownloadPath = apiPath + "tree/" + data.tree;
     setAndPlayAudio(audioDownloadEnpoint);
+    showParseTreeButton(true);
   });
 }
 
 parseTreeButton.onclick = () => {
-  // fetch(apiPath + 'parse-tree-pdf/download', {
-  //   method: "get"
-  // }).then(handleErrors)
-  // .then(response => {
-  //   return response.json();
-  // }).then(data => {
-    // parseTreeView.style.display="flex";
-    parseTreeView.src = apiPath + 'parse-tree-pdf/download' ;
+  var currentParseTree = document.getElementById('parse-tree-view');
+  if(currentParseTree != null){
+    modalContent.removeChild(currentParseTree);
+  }
+  createPdfView();
     modal.style.display = "flex";
-  // });
 }
+
+function createPdfView(){
+  var pdfView = document.createElement('embed');
+  pdfView.id = "parse-tree-view";
+  pdfView.width = "100%"
+  pdfView.height = "800px";
+  pdfView.setAttribute('src', parseTreeDownloadPath);
+  modalContent.appendChild(pdfView);
+}
+
 span.onclick = function() {
   modal.style.display = "none";
 }
@@ -142,10 +152,11 @@ speakButton.onclick = () => {
     .then(response => {
       return response.json();
     }).then(data => {
-      showParseTreeButton(true);
       textLoader.style.display = "none";
       var audioDownloadEnpoint = apiPath + "/audio/" + data.audio
+      parseTreeDownloadPath = apiPath + "tree/" + data.tree;
       setAndPlayAudio(audioDownloadEnpoint)
+      showParseTreeButton(true);
     });
   } else if (isArticleOption) {
     var articleLink = articleInput.value;
@@ -160,10 +171,11 @@ speakButton.onclick = () => {
     .then(response => {
       return response.json();
     }).then(data => {
-      showParseTreeButton(true);
       articleLoader.style.display = "none";
       var audioDownloadEnpoint = apiPath + "/audio/" + data.audio
+      parseTreeDownloadPath = apiPath + "tree/" + data.tree;
       setAndPlayAudio(audioDownloadEnpoint);
+      showParseTreeButton(true);
     });
   }
 }
@@ -176,6 +188,7 @@ function setAndPlayAudio(audioUrl){
 
 function stopAudio(){
   audio.src = ""
+  parseTreeView.src = ""
 }
 
 button.onclick = () => {
