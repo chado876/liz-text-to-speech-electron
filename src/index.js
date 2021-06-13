@@ -4,6 +4,7 @@ dropArea = document.getElementById("drag-area"),
   button = dropArea.querySelector("button"),
   input = dropArea.querySelector("input"),
   speakButton = document.getElementById("speak-btn"),
+  parseTreeButton = document.getElementById("parse-btn"),
   textOptionBtn = document.getElementById("textOption"),
   fileOptionBtn = document.getElementById("fileOption"),
   articleOptionBtn = document.getElementById("articleOption"),
@@ -19,7 +20,11 @@ dropArea = document.getElementById("drag-area"),
   articleArea = document.getElementById('article-area'),
   buttonGroup = document.getElementById('button-group'),
   textInput = document.getElementById('text-box'),
-  articleInput = document.getElementById('article-box');
+  articleInput = document.getElementById('article-box'),
+  parseTreeView = document.getElementById('parse-tree-view'),
+  modal = document.getElementById("myModal"),
+  span = document.getElementsByClassName("close")[0];
+
 
 var isFileOption = false;
 isTextOption = false,
@@ -40,13 +45,36 @@ async function uploadFile(file) {
   .then(response => {
     return response.json();
   }).then(data => {
+    showParseTreeButton(true);
     fileLoader.style.display = "none";
     var audioDownloadEnpoint = apiPath + "audio/" + data.audio
     setAndPlayAudio(audioDownloadEnpoint);
   });
 }
 
+parseTreeButton.onclick = () => {
+  // fetch(apiPath + 'parse-tree-pdf/download', {
+  //   method: "get"
+  // }).then(handleErrors)
+  // .then(response => {
+  //   return response.json();
+  // }).then(data => {
+    // parseTreeView.style.display="flex";
+    parseTreeView.src = apiPath + 'parse-tree-pdf/download' ;
+    modal.style.display = "flex";
+  // });
+}
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
 textOptionBtn.onclick = () => {
+  showParseTreeButton(false);
   headerText.innerHTML = "Type Some Text For Liz To Read!";
   homeArea.style.display = 'none';
   textArea.style.display = 'flex';
@@ -58,6 +86,7 @@ textOptionBtn.onclick = () => {
 }
 
 fileOptionBtn.onclick = () => {
+  showParseTreeButton(false);
   headerText.innerHTML = "Upload A File For Liz To Read!";
   homeArea.style.display = 'none';
   textArea.style.display = 'none';
@@ -69,6 +98,7 @@ fileOptionBtn.onclick = () => {
 }
 
 articleOptionBtn.onclick = () => {
+  showParseTreeButton(false);
   headerText.innerHTML = "Copy & Paste an Article's Link for Liz to Read!";
   homeArea.style.display = 'none';
   textArea.style.display = 'none';
@@ -112,6 +142,7 @@ speakButton.onclick = () => {
     .then(response => {
       return response.json();
     }).then(data => {
+      showParseTreeButton(true);
       textLoader.style.display = "none";
       var audioDownloadEnpoint = apiPath + "/audio/" + data.audio
       setAndPlayAudio(audioDownloadEnpoint)
@@ -129,6 +160,7 @@ speakButton.onclick = () => {
     .then(response => {
       return response.json();
     }).then(data => {
+      showParseTreeButton(true);
       articleLoader.style.display = "none";
       var audioDownloadEnpoint = apiPath + "/audio/" + data.audio
       setAndPlayAudio(audioDownloadEnpoint);
@@ -213,4 +245,12 @@ function stopLoading(){
     articleLoader.style.display = "none";
   }
 
+}
+
+function showParseTreeButton(show) {
+  if (show == true){
+    parseTreeButton.style.display="flex";
+  } else {
+    parseTreeButton.style.display="none";
+  }
 }
