@@ -130,6 +130,7 @@ backBtn.onclick = () => {
   buttonGroup.style.display = 'none';
   articleArea.style.display = 'none';
   stopAudio();
+  stopLoading();
 }
 
 speakButton.onclick = () => {
