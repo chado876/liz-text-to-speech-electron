@@ -13,7 +13,7 @@ function createWindow () {
 
   win.loadFile('src/index.html')
 
-  // Menu.setApplicationMenu(null);
+  Menu.setApplicationMenu(null);
 
     // Open the DevTools.
     // win.webContents.openDevTools()
