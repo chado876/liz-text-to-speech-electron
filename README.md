@@ -13,6 +13,8 @@ npm install electron --save-dev
 ```
 The application can then be run using the command 'npm run'
 
+## Screenshots
+
 ![alt text](https://github.com/chado876/liz-text-to-speech-electron/blob/master/screenshots/img1.PNG)
 
 ![alt text](https://github.com/chado876/liz-text-to-speech-electron/blob/master/screenshots/img2.PNG)
