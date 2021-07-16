@@ -34,7 +34,9 @@ isTextOption = false,
 
 let file; //this is a global variable and we'll use it inside multiple functions
 
-var parseTreeDownloadPath = ''
+var parseTreeDownloadPath = '';
+
+var text = '';
 
 async function uploadFile(file) {
   let formData = new FormData();
@@ -50,7 +52,7 @@ async function uploadFile(file) {
   }).then(data => {
     fileLoader.style.display = "none";
     var audioDownloadEnpoint = apiPath + "audio/" + data.audio;
-    parseTreeDownloadPath = apiPath + "tree/" + data.tree;
+    text = data.text;
     setAndPlayAudio(audioDownloadEnpoint);
     showParseTreeButton(true);
   });
@@ -61,9 +63,21 @@ parseTreeButton.onclick = () => {
   if(currentParseTree != null){
     modalContent.removeChild(currentParseTree);
   }
-  createPdfView();
+  let formData = new FormData();
+    formData.append('text', text);
+  fetch(apiPath + 'parse', {
+    body: formData,
+    method: "post"
+  }).then(handleErrors)
+  .then(response => {
+    return response.json();
+  }).then(data => {
+    parseTreeDownloadPath = apiPath + "tree/" + data.tree;
+    createPdfView();
     modal.style.display = "flex";
+  });
 }
+
 
 function createPdfView(){
   var pdfView = document.createElement('embed');
@@ -121,7 +135,7 @@ articleOptionBtn.onclick = () => {
 }
 
 backBtn.onclick = () => {
-  headerText.innerHTML = "Liz Text To Speech";
+  headerText.innerHTML = "Liz Text To Speech 2.0 <i class='fa fa-microphone'></i>";
   textInput.value = "";
   audio.style.display = "none";
   homeArea.style.display = 'flex';
@@ -155,7 +169,7 @@ speakButton.onclick = () => {
     }).then(data => {
       textLoader.style.display = "none";
       var audioDownloadEnpoint = apiPath + "/audio/" + data.audio
-      parseTreeDownloadPath = apiPath + "tree/" + data.tree;
+      text = data.text;
       setAndPlayAudio(audioDownloadEnpoint)
       showParseTreeButton(true);
     });
@@ -174,7 +188,7 @@ speakButton.onclick = () => {
     }).then(data => {
       articleLoader.style.display = "none";
       var audioDownloadEnpoint = apiPath + "/audio/" + data.audio
-      parseTreeDownloadPath = apiPath + "tree/" + data.tree;
+      text = data.text;
       setAndPlayAudio(audioDownloadEnpoint);
       showParseTreeButton(true);
     });
@@ -230,7 +244,7 @@ function showFile() {
   validFile = false;
   let fileType = file.type; //getting selected file type
   let fileName = file.name;
-  let validExtensions = ["application/pdf", "text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.presentationml.presentation"]; //adding some valid image extensions in array
+  let validExtensions = ["application/pdf", "text/plain", ".rtf", "application/msword", "application/vnd.openxmlformats-officedocument.presentationml.presentation"]; //adding some valid image extensions in array
   if (validExtensions.includes(fileType)) { //if user selected file is an image file
     validFile = true;
     document.getElementById('fileName').textContent = fileName;

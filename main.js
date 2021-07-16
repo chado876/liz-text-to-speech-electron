@@ -8,7 +8,7 @@ function createWindow () {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
-    icon: 'src/assets/icon.ico'
+    icon: 'src/assets/liz2.ico'
   })
 
   win.loadFile('src/index.html')
